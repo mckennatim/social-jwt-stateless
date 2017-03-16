@@ -1,0 +1,80 @@
+{	
+ 	"development": {
+ 		"gmail": {
+			"service": "gmail",
+			"auth": {
+			    "user": "mckenna.tim@gmail.com",
+			    "pass": "xx" 
+			}
+    },	 	
+ 		"jwt": {
+ 			"secret": "xx",
+ 			"exp": 90 
+ 		},
+ 		"db": {
+ 			"db": "soauth",
+ 			"url": "mongodb://localhost/soauth"
+ 		},
+		"mysql":{
+		  "host"    : "localhost",
+		  "user"    : "root",
+		  "password": "",
+		  "database" : "soauth"			
+		},	 			
+		"url": {
+			"server": "127.0.0.1",
+			"local": "127.0.0.1"
+		},
+		"port":{
+			"express": 3004
+		},
+		"auth":{
+	    "facebookAuth" : {
+	        "clientID"        : "x", 
+	        "clientSecret"    : "x", 
+	        "callbackURL"     : "http://127.0.0.1:3003/api/auth/facebook/callback",
+	        "profileURL": "https://graph.facebook.com/v2.5/me?fields=first_name,last_name,email"
+	    },
+	    "twitterAuth" : {
+	        "consumerKey"        : "x",
+	        "consumerSecret"     : "x",
+	        "callbackURL"        : "http://127.0.0.1:7080/auth/twitter/callback"
+	    },
+	    "googleAuth" : {
+	        "clientID"         : "574383590213-1vfblbifa1lv2oalq2jl5mcvfklcs8lo.apps.googleusercontent.com",
+	        "clientSecret"     : "i-FEHx6667GoiCqaqSzyEvep",
+	        "callbackURL"      : "http://127.0.0.1:7080/auth/google/callback"
+	    }			
+		}
+ 	},
+ 	"production": {
+ 		"gmail": {
+			"service": "gmail",
+			"auth": {
+			    "user": "mckenna.tim@gmail.com",
+			    "pass": "xx" 
+			}
+    },		
+ 		"jwt": {
+ 			"secret": "x",
+ 			"exp": 90 
+ 		},
+ 		"db": {
+ 			"db": "soauth",
+ 			"url": "mongodb://localhost/soauth"
+ 		},
+		"mysql":{
+		  "host"     : "localhost",
+		  "user"    : "root",
+		  "password": "nji9ol",
+		  "database" : "soauth"			
+		},	 			
+		"url": {
+			"server": "localhost",
+			"local": "0.0.0.0"
+		},
+		"port": {
+			"express": 3003
+		}
+ 	}
+}
