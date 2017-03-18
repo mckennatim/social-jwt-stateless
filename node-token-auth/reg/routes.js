@@ -8,6 +8,7 @@ var env = require('../../env.json')
 var cfg= env[process.env.NODE_ENV||'development']
 var secret = cfg.jwt.secret
 var exp = cfg.jwt.exp
+var superagent = require('superagent')
 
 /*-----------------------------setup mailer-----------------------------------*/
 var nodemailer = require('nodemailer')
@@ -260,14 +261,31 @@ module.exports = function(passport) {
   //facebook -------------------------------
 
   // send to facebook to do the authentication
-  router.get('api/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
+  router.get('/api/sauth/facebook', passport.authenticate('facebook', { authType: 'rerequest', scope : ['email'] }));
+  // router.get('/api/sauth/facebook', function(req,res){
+  // 	console.log(req)
+  // 	console.log(res)
+  // 	res.jsonp({message: "dog shit"})
+  // });
 
   // handle the callback after facebook has authenticated the user
-  router.get('api/auth/facebook/callback',
-    passport.authenticate('facebook', {
-      successRedirect : '/api/account',
-      failureRedirect : '/api'
-    }));	
-
+  router.get('/api/sauth/facebook/callback',
+    passport.authenticate('facebook', {}));	
+	// router.get('/api/sauth/facebook/callback', function(req,res){
+	// 	//cons.log(req)
+	// 	cons.log(res.body)
+	// 	res.jsonp({message: "dog shit"})
+	// });
+  router.get('/api/sauth/fuckbook', function(req,res){
+		var httpLoc="https://graph.facebook.com/v2.8/me?fields=id,name,email&access_token=EAADvZCxpTzYABADSzz11mNGMOVAZBHNaMIm0qmMih1EMkyn01J4oLQQ2hN5sU0gtjZBw62KPiXOUEtZB3tK4tegYZBq3ELKFeV21ugE6sZCAlSCWWPmTp6sOrUevXajWbK1uliwWTn8fFvDBGIZC6QrZAZCrEeZBFDZCUdXiAVfJOLJivJSI4RXO11oLxlzmzcvvLwZD"
+		superagent
+			.get(httpLoc)
+			.end(function(err, res, req) {
+				console.log(err)
+				console.log('inthisj')
+				console.log(res.text)
+			})  	
+  		res.jsonp({message: 'data in res.text'})
+  })
 	return router;
 }

@@ -61,7 +61,7 @@ describe('superagent:', function() {
 			})
 		})
 		it('POSTs /auth/email w apikey and returns token', function(done) {
-			agent
+			superagent
 				.post(httpLoc + 'auth/' + emtim2)
 				.send({
 					apikey: apikey
@@ -78,7 +78,7 @@ describe('superagent:', function() {
 			}
 		)
 		it('POSTs fails with 401 for tim2 with wrong apikey', function(done) {
-			agent
+			superagent
 				.post(httpLoc + 'auth/'+emtim2)
 				.send({
 					apikey: '123457'
@@ -91,7 +91,7 @@ describe('superagent:', function() {
 			}
 		)
 		it('POSTs fails for emtim with emtim2 apikey', function(done) {
-			agent
+			superagent
 				.post(httpLoc + 'auth/'+emtim)
 				.send({
 					apikey: apikey
@@ -106,7 +106,7 @@ describe('superagent:', function() {
 	})
 	describe('users', function() {
 		it('GETs succeeds w userinfo from api/account when passed token', function(done) {
-			agent
+			superagent
 				.get(httpLoc + 'account/')
 				.set('Authorization', 'Bearer ' + token)
 				.end(function(e, res) {
@@ -119,7 +119,7 @@ describe('superagent:', function() {
 				})
 		})
 		it('GETs api/users/:email when passed token', function(done) {
-			agent
+			superagent
 				.get(httpLoc + 'users/'+emtim2)
 				.set('Authorization', 'Bearer ' + token)
 				.end(function(e, res) {
@@ -133,7 +133,7 @@ describe('superagent:', function() {
 				})
 		})
 		it('GETs fail from api/account when passed badtoken', function(done) {
-			agent
+			superagent
 				.get(httpLoc + 'account/')
 				.set('Authorization', 'Bearer ' + token +'dog')
 				.end(function(e, res) {
@@ -143,7 +143,7 @@ describe('superagent:', function() {
 				})
 		})		
 		it('DELETES user tim2', function(done){
-			agent
+			superagent
 				.del(httpLoc + 'users/'+emtim2)
 				.set('Authorization', 'Bearer ' + token)
 				.end(function(e, res) {
@@ -153,5 +153,26 @@ describe('superagent:', function() {
 					done()
 				})			
 		})
+	})
+	describe('social', function() {
+		it('GETS sauth/facebook', function(done){
+			var httpLoc="http://localhost:3004/api/sauth/fuckbook"
+			superagent
+				.get(httpLoc)
+				.end(function(err, res, req) {
+					console.log(res.body)
+					expect(true).to.be(true)
+					done()
+				})			
+		})
+		// it('GETS manuall contacts facebook', function(done){
+		// 	var httpLoc="https://www.facebook.com/v2.8/dialog/oauth?scope=email&client_id=267464200368452&redirect_uri=http://127.0.0.1:3004/api/sauth/facebook/callback"
+		// 	agent.get(httpLoc)
+		// 		.end(function(e, res) {
+		// 			console.log(res)
+		// 			expect(true).to.be(true)
+		// 			done()
+		// 		})			
+		// })		
 	})
 })

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>tempclient</title>
+	<link rel="stylesheet" href="">
+	<script src="./superagent.js"></script>
+</head>
+<body>
+	<h2>Social JWT stateless</h2>
+		<input type="text" id="email" placeholder="enter email" >
+		<input type="button" onclick="sendEmail()" value="submit" ></br>
+		<input type="text" id="apikey" placeholder="enter apikey" >
+		<input type="button" onclick="sendApiKey()" value="submit" ><br>
+		<input type="button" onclick="authFacebook()" value="auth facebook" >
+<br>
+		<input type="button" onclick="authFacebookCheat()" value="auth facebook cheat" >
+	<script>
+		var toke=""
+		var email=el("email")
+		function sendEmail(){
+			console.log(email.value)
+			var httpLoc="http://localhost:3004/api/register/"+email.value
+			superagent.get(httpLoc)
+				.end(function(e, res) {
+					console.log(res.body.result)
+				})		
+		}
+		var apikey=el("apikey")
+		function sendApiKey(){
+			console.log(email.value)
+			var httpLoc="http://127.0.0.1:3004/api/auth/"+email.value
+			superagent
+				.post(httpLoc)
+				.send({
+					apikey: apikey.value
+				})
+				.end(function(e, res) {
+					token=res.body.token
+					console.log(token)
+				})		
+		}
+		// function authFacebook(){
+		// 	var httpLoc="http://localhost:3004/api/sauth/facebook"
+		// 	superagent
+		// 		.get(httpLoc)
+		// 		.end(function(e, res) {
+		// 			console.log(e)
+		// 			console.log(res.body)
+		// 		})				
+		// }
+		function authFacebook(){
+			var myHeaders = new Headers();
+			console.log(myHeaders)
+			var httpLoc="http://localhost:3004/api/sauth/fuckbook"
+			fetch(httpLoc, {
+					method: 'get',
+					headers: myHeaders,
+					mode: 'cors'
+				})
+				.then(function(response){
+					console.log(response)
+				})
+				.catch(function(err){
+					console.log(err)
+				})
+		}
+		function authFacebookCheat(){
+			var httpLoc="https://www.facebook.com/v2.8/dialog/oauth?scope=email&client_id=267464200368452&redirect_uri=http://127.0.0.1:3004/api/sauth/facebook/callback"
+			superagent.get(httpLoc)
+				.end(function(e, res) {
+					console.log(res.body)
+				})				
+		}
+
+		function el(id){
+			return document.getElementById(id)
+		}
+
+		var emel=el("email")
+		console.log(emel.value)
+
+	</script>
+</body>
+</html>
